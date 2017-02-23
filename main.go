@@ -1,6 +1,7 @@
 package main
 
 import (
+	"context"
 	"flag"
 	"fmt"
 	"io/ioutil"
@@ -48,13 +49,14 @@ var destructive = flag.Bool("d", false, "delete unknown labels")
 func main() {
 	owner, repo := parseArgs()
 	user, token := loadHubCfg()
+	ctx := context.Background()
 
 	client := github.NewClient((&github.BasicAuthTransport{
 		Username: user,
 		Password: token,
 	}).Client())
 
-	labels, _, err := client.Issues.ListLabels(owner, repo, nil)
+	labels, _, err := client.Issues.ListLabels(ctx, owner, repo, nil)
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -64,7 +66,7 @@ func main() {
 				log.Printf("ignore %q", l)
 			} else {
 				log.Printf("delete %q", l)
-				_, err := client.Issues.DeleteLabel(owner, repo, *l.Name)
+				_, err := client.Issues.DeleteLabel(ctx, owner, repo, *l.Name)
 				if err != nil {
 					log.Fatal(err)
 				}
@@ -72,7 +74,7 @@ func main() {
 		} else if makeLabels[*l.Name] != *l.Color {
 			log.Printf("colour %q (%s to %s)", l, *l.Color, makeLabels[*l.Name])
 			*l.Color = makeLabels[*l.Name]
-			_, _, err := client.Issues.EditLabel(owner, repo, *l.Name, &l)
+			_, _, err := client.Issues.EditLabel(ctx, owner, repo, *l.Name, l)
 			if err != nil {
 				log.Fatal(err)
 			}
@@ -84,7 +86,7 @@ func main() {
 	for name, color := range makeLabels {
 		log.Printf("create %q (%s)", name, color)
 		l := &github.Label{Name: &name, Color: &color}
-		_, _, err := client.Issues.CreateLabel(owner, repo, l)
+		_, _, err := client.Issues.CreateLabel(ctx, owner, repo, l)
 		if err != nil {
 			log.Fatal(err)
 		}
