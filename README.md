@@ -15,7 +15,7 @@ Download binary for your OS manually from
 this to install the latest version:
 
 ```sh
-curl -sfL $(curl -s https://api.github.com/repos/powerman/gh-make-labels/releases/latest | grep -i /gh-make-labels-$(uname -s)-$(uname -m)\" | cut -d\" -f4) | install /dev/stdin /usr/local/bin/gh-make-labels
+curl -sfL $(curl -s https://api.github.com/repos/powerman/gh-make-labels/releases/latest | grep -i /gh-make-labels-$(uname -s)-$(uname -m)\" | cut -d\" -f4) | sudo install /dev/stdin /usr/local/bin/gh-make-labels
 ```
 
 ### Dependencies
