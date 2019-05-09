@@ -1,4 +1,4 @@
-# Make labels for GitHub repo [![GitHub release](https://img.shields.io/github/release/powerman/gh-make-labels.svg)](https://github.com/powerman/gh-make-labels/releases/latest) ![CI Build Status](https://circleci.com/gh/powerman/gh-make-labels.svg?style=svg)](https://circleci.com/gh/powerman/gh-make-labels) ![Go Report Card](https://goreportcard.com/badge/github.com/powerman/gh-make-labels)](https://goreportcard.com/report/github.com/powerman/gh-make-labels)
+# Make labels for GitHub repo [![GitHub release](https://img.shields.io/github/release/powerman/gh-make-labels.svg)](https://github.com/powerman/gh-make-labels/releases/latest) [![CI Build Status](https://circleci.com/gh/powerman/gh-make-labels.svg?style=svg)](https://circleci.com/gh/powerman/gh-make-labels) [![Go Report Card](https://goreportcard.com/badge/github.com/powerman/gh-make-labels)](https://goreportcard.com/report/github.com/powerman/gh-make-labels)
 
 This command-line tool will update given repo's labels to match predefined
 labels list.
