@@ -27,7 +27,7 @@ var (
 			structlog.KeyMessage: " %#[2]q",
 			"err":                " %s: %s",
 		})
-	cfg struct {
+	cfg struct { //nolint:maligned
 		version    bool
 		logLevel   string
 		configPath string
@@ -80,8 +80,8 @@ func main() {
 	}
 }
 
-func loadLabelsCfg(path string) (map[string]string, error) {
-	buf, err := ioutil.ReadFile(path)
+func loadLabelsCfg(configPath string) (map[string]string, error) {
+	buf, err := ioutil.ReadFile(configPath)
 	if err != nil {
 		return nil, err
 	}
@@ -131,7 +131,7 @@ func loadHubCfg() (user, token string, err error) {
 	return hubCfg["github.com"][0].User, hubCfg["github.com"][0].OAuthToken, nil
 }
 
-func makeGitHubLabels(
+func makeGitHubLabels( //nolint:gocyclo
 	ctx context.Context,
 	user string,
 	pass string,
@@ -160,7 +160,8 @@ func makeGitHubLabels(
 	var err error
 	for _, l := range oldLabels {
 		label, color := *l.Name, *l.Color
-		if newLabels[label] == "" {
+		switch {
+		case newLabels[label] == "":
 			if !cleanup {
 				log.Debug("ignore", "label", label)
 			} else {
@@ -171,7 +172,7 @@ func makeGitHubLabels(
 					log.Info("remove", "label", label)
 				}
 			}
-		} else if newLabels[label] != color {
+		case newLabels[label] != color:
 			*l.Color = newLabels[label]
 			_, _, err = client.Issues.EditLabel(ctx, owner, repo, label, l)
 			if err != nil {
@@ -179,14 +180,14 @@ func makeGitHubLabels(
 			} else {
 				log.Info("update", "label", label, "color", newLabels[label], "old_color", color)
 			}
-		} else {
+		default:
 			log.Debug("exists", "label", label)
 		}
 		delete(newLabels, label)
 	}
 
 	for label, color := range newLabels {
-		l := &github.Label{Name: &label, Color: &color}
+		l := &github.Label{Name: github.String(label), Color: github.String(color)}
 		_, _, err = client.Issues.CreateLabel(ctx, owner, repo, l)
 		if err != nil {
 			log.Warn("failed to create", "label", label, "color", color, "err", prettify(err))
@@ -203,11 +204,12 @@ func prettify(err error) error {
 	default:
 		return err
 	case *github.ErrorResponse:
-		if len(err.Errors) != 1 {
+		switch {
+		case len(err.Errors) != 1:
 			return err
-		} else if err.Errors[0].Code == "custom" {
+		case err.Errors[0].Code == "custom":
 			return errors.New(err.Errors[0].Message)
-		} else {
+		default:
 			return errors.New(err.Errors[0].Code)
 		}
 	}
