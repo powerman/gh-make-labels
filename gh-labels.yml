@@ -1,0 +1,45 @@
+labels:
+  "TBD":            status-hold
+  "question":       kind-discuss
+  "bug":            kind-bug
+  "vulnerability":  kind-bug
+  "feature":        kind-feature
+  "enhancement":    kind-feature
+  "optimization":   kind-feature
+  "chore":          kind-chore
+  "doc":            kind-chore
+  "refactoring":    kind-chore
+  "test":           kind-chore
+  "URGENT":         priority-high
+  "BLOCKED":        dependency
+  "blocker":        dependency
+  "➊":              estimate
+  "➋":              estimate
+  "➌":              estimate
+  "➎":              estimate
+  "➑":              estimate
+  "◷1h":            estimate
+  "◷3h":            estimate
+  "◷8h":            estimate
+  "◷16h":           estimate
+  "⌘production":    environment
+  "⌘staging":       environment
+  "⌘dev":           environment
+  "∈UserStory":     area-business
+  "∈API":           area-business
+  "∈architecture":  area-internal
+  "∈framework":     area-internal
+  "∈security":      area-internal
+
+colors:
+  status-hold:      "FFFFFF" # White
+  kind-discuss:     "0000CD" # MediumBlue
+  kind-bug:         "DC143C" # Crimson
+  kind-feature:     "008000" # Green
+  kind-chore:       "FFD700" # Gold
+  priority-high:    "FFC0CB" # Pink
+  dependency:       "5218FA" # HanPurple
+  estimate:         "E6E6FA" # Lavender
+  environment:      "8A2BE2" # BlueViolet
+  area-business:    "90EE90" # LightGreen
+  area-internal:    "F0E68C" # Khaki
