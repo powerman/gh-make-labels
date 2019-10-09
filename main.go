@@ -131,7 +131,7 @@ func loadHubCfg() (user, token string, err error) {
 	return hubCfg["github.com"][0].User, hubCfg["github.com"][0].OAuthToken, nil
 }
 
-func makeGitHubLabels( //nolint:gocyclo
+func makeGitHubLabels( //nolint:gocyclo,funlen
 	ctx context.Context,
 	user string,
 	pass string,
