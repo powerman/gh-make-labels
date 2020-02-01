@@ -185,6 +185,7 @@ linters-settings:
     disabled-checks:
       - hugeParam # premature optimization
       - paramTypeCombine # questionable
+      - switchTrue # questionable
       - yodaStyleExpr # questionable
 
     # Enable multiple checks by tags, run `GL_DEBUG=gocritic golangci-lint run` to see all tags and checks.
@@ -274,11 +275,6 @@ issues:
       text: "(unnamedResult|exitAfterDefer|rangeValCopy)"
       linters:
         - gocritic
-
-    # Package def is designed to contain global constants.
-    - path: internal/def/
-      linters:
-        - gochecknoglobals
 
     # Commands are allowed to contain a lot of flags.
     - path: main.go
