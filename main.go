@@ -8,7 +8,6 @@ import (
 	"fmt"
 	"os"
 	"path"
-	"runtime"
 	"strings"
 
 	"github.com/google/go-github/github"
@@ -27,7 +26,6 @@ var (
 //nolint:gochecknoglobals // By design.
 var (
 	cmd = strings.TrimSuffix(path.Base(os.Args[0]), ".test")
-	ver string // set by ./build
 	log = structlog.NewZeroLogger().
 		SetPrefixKeys(structlog.KeyLevel).
 		SetKeysFormat(map[string]string{
@@ -36,7 +34,6 @@ var (
 			"err":                " %s: %s",
 		})
 	cfg struct {
-		version    bool
 		logLevel   string
 		configPath string
 		cleanup    bool
@@ -59,13 +56,9 @@ func main() {
 		cfg.owner, cfg.repo = ownerRepo[0], ownerRepo[1]
 	}
 
-	switch {
-	case cfg.owner == "" || cfg.repo == "":
+	if cfg.owner == "" || cfg.repo == "" {
 		flag.Usage()
 		os.Exit(exitCodeBadArgs)
-	case cfg.version: // Must be checked after all other flags for ease testing.
-		fmt.Println(cmd, ver, runtime.Version())
-		os.Exit(0)
 	}
 
 	// Wrong log.level is not fatal, it will be reported and set to "debug".
