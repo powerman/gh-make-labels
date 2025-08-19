@@ -1,4 +1,11 @@
-# Make labels for GitHub repo [![GitHub release](https://img.shields.io/github/release/powerman/gh-make-labels.svg)](https://github.com/powerman/gh-make-labels/releases/latest) [![CI Build Status](https://circleci.com/gh/powerman/gh-make-labels.svg?style=svg)](https://circleci.com/gh/powerman/gh-make-labels) [![Go Report Card](https://goreportcard.com/badge/github.com/powerman/gh-make-labels)](https://goreportcard.com/report/github.com/powerman/gh-make-labels)
+# Make labels for GitHub repo
+
+[![License MIT](https://img.shields.io/badge/license-MIT-royalblue.svg)](LICENSE)
+[![Go version](https://img.shields.io/github/go-mod/go-version/powerman/gh-make-labels?color=blue)](https://go.dev/)
+[![Test](https://img.shields.io/github/actions/workflow/status/powerman/gh-make-labels/test.yml?label=test)](https://github.com/powerman/gh-make-labels/actions/workflows/test.yml)
+[![Coverage Status](https://raw.githubusercontent.com/powerman/gh-make-labels/gh-badges/coverage.svg)](https://github.com/powerman/gh-make-labels/actions/workflows/test.yml)
+[![Go Report Card](https://goreportcard.com/badge/github.com/powerman/gh-make-labels)](https://goreportcard.com/report/github.com/powerman/gh-make-labels)
+[![Release](https://img.shields.io/github/v/release/powerman/gh-make-labels?color=blue)](https://github.com/powerman/gh-make-labels/releases/latest)
 
 This command-line tool will update given repo's labels to match predefined
 labels list.
@@ -6,7 +13,6 @@ labels list.
 Check [this repo labels](https://github.com/powerman/gh-make-labels/labels)
 as example which labels you'll have after running this tool using example
 [config](./gh-labels.yml).
-
 
 ## Installation
 
@@ -23,7 +29,6 @@ curl -sfL $(curl -s https://api.github.com/repos/powerman/gh-make-labels/release
 You should have installed and configured
 [hub](https://github.com/github/hub) tool (gh-make-labels will use hub's
 token to access GitHub API).
-
 
 ## Usage
 

@@ -1,3 +1,4 @@
+// A simple tool to manage GitHub labels based on a YAML configuration file.
 package main
 
 import (
@@ -5,7 +6,6 @@ import (
 	"errors"
 	"flag"
 	"fmt"
-	"io/ioutil"
 	"os"
 	"path"
 	"runtime"
@@ -16,7 +16,15 @@ import (
 	"gopkg.in/yaml.v2"
 )
 
-//nolint:gochecknoglobals
+const exitCodeBadArgs = 2
+
+var (
+	errMissingColor = errors.New("missing color")
+	errNoHubConfig  = errors.New("failed to detect configuration of hub tool")
+	errNoHub        = errors.New("hub tool is not installed or not configured")
+)
+
+//nolint:gochecknoglobals // By design.
 var (
 	cmd = strings.TrimSuffix(path.Base(os.Args[0]), ".test")
 	ver string // set by ./build
@@ -27,7 +35,7 @@ var (
 			structlog.KeyMessage: " %#[2]q",
 			"err":                " %s: %s",
 		})
-	cfg struct { //nolint:maligned
+	cfg struct {
 		version    bool
 		logLevel   string
 		configPath string
@@ -41,7 +49,7 @@ func main() {
 	flag.StringVar(&cfg.logLevel, "log.level", "info", "log `level` (debug|info|warn|err)")
 	flag.StringVar(&cfg.configPath, "config", "gh-labels.yml", "`path` to config file")
 	flag.BoolVar(&cfg.cleanup, "cleanup", false, "delete unknown labels")
-	flag.Usage = func() {
+	flag.Usage = func() { //nolint:reassign // By design.
 		fmt.Fprintf(os.Stderr, "Usage: %s [flags] owner/repo\n", cmd)
 		flag.PrintDefaults()
 	}
@@ -54,7 +62,7 @@ func main() {
 	switch {
 	case cfg.owner == "" || cfg.repo == "":
 		flag.Usage()
-		os.Exit(2)
+		os.Exit(exitCodeBadArgs)
 	case cfg.version: // Must be checked after all other flags for ease testing.
 		fmt.Println(cmd, ver, runtime.Version())
 		os.Exit(0)
@@ -81,7 +89,7 @@ func main() {
 }
 
 func loadLabelsCfg(configPath string) (map[string]string, error) {
-	buf, err := ioutil.ReadFile(configPath)
+	buf, err := os.ReadFile(configPath) //nolint:gosec // False positive.
 	if err != nil {
 		return nil, err
 	}
@@ -99,7 +107,7 @@ func loadLabelsCfg(configPath string) (map[string]string, error) {
 	for label, colorName := range labelCfg.Labels {
 		colorHex, ok := labelCfg.Colors[colorName]
 		if !ok {
-			return nil, fmt.Errorf("label %q: missing color %q", label, colorName)
+			return nil, fmt.Errorf("label %q: %w %q", label, errMissingColor, colorName)
 		}
 		labels[label] = colorHex
 	}
@@ -107,15 +115,15 @@ func loadLabelsCfg(configPath string) (map[string]string, error) {
 }
 
 func loadHubCfg() (user, token string, err error) {
-	buf, err := ioutil.ReadFile(os.Getenv("HOME") + "/.config/hub")
+	buf, err := os.ReadFile(os.Getenv("HOME") + "/.config/hub")
 	if err != nil {
 		if os.IsNotExist(err) {
-			return "", "", errors.New("hub tool is not installed or not configured")
+			return "", "", errNoHub
 		}
 		return "", "", err
 	}
 
-	var hubCfg = make(map[string][]struct {
+	hubCfg := make(map[string][]struct {
 		Protocol   string
 		User       string
 		OAuthToken string `yaml:"oauth_token"`
@@ -125,13 +133,13 @@ func loadHubCfg() (user, token string, err error) {
 		return "", "", err
 	}
 	if len(hubCfg["github.com"]) == 0 {
-		return "", "", errors.New("failed to detect configuration of hub tool")
+		return "", "", errNoHubConfig
 	}
 
 	return hubCfg["github.com"][0].User, hubCfg["github.com"][0].OAuthToken, nil
 }
 
-func makeGitHubLabels( //nolint:gocyclo,funlen
+func makeGitHubLabels( //nolint:gocyclo,funlen,gocognit,revive // TODO: Refactor.
 	ctx context.Context,
 	user string,
 	pass string,
@@ -200,17 +208,18 @@ func makeGitHubLabels( //nolint:gocyclo,funlen
 }
 
 func prettify(err error) error {
-	switch err := err.(type) {
-	default:
-		return err
-	case *github.ErrorResponse:
+	var errResp *github.ErrorResponse
+	switch {
+	case errors.As(err, &errResp):
 		switch {
-		case len(err.Errors) != 1:
-			return err
-		case err.Errors[0].Code == "custom":
-			return errors.New(err.Errors[0].Message)
+		case len(errResp.Errors) != 1:
+			return errResp
+		case errResp.Errors[0].Code == "custom":
+			return errors.New(errResp.Errors[0].Message) //nolint:err113 // By design.
 		default:
-			return errors.New(err.Errors[0].Code)
+			return errors.New(errResp.Errors[0].Code) //nolint:err113 // By design.
 		}
+	default:
+		return errResp
 	}
 }
