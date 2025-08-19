@@ -20,8 +20,8 @@ const exitCodeBadArgs = 2
 
 var (
 	errMissingColor = errors.New("missing color")
-	errNoHubConfig  = errors.New("failed to detect configuration of hub tool")
-	errNoHub        = errors.New("hub tool is not installed or not configured")
+	errNoGHConfig   = errors.New("failed to detect configuration of gh tool")
+	errNoGH         = errors.New("gh tool is not installed or not configured")
 )
 
 //nolint:gochecknoglobals // By design.
@@ -76,7 +76,7 @@ func main() {
 		log.Fatal(err)
 	}
 
-	user, token, err := loadHubCfg()
+	user, token, err := loadGHCfg()
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -114,29 +114,29 @@ func loadLabelsCfg(configPath string) (map[string]string, error) {
 	return labels, nil
 }
 
-func loadHubCfg() (user, token string, err error) {
-	buf, err := os.ReadFile(os.Getenv("HOME") + "/.config/hub")
+func loadGHCfg() (user, token string, err error) {
+	buf, err := os.ReadFile(os.Getenv("HOME") + "/.config/gh/hosts.yml")
 	if err != nil {
 		if os.IsNotExist(err) {
-			return "", "", errNoHub
+			return "", "", errNoGH
 		}
 		return "", "", err
 	}
 
-	hubCfg := make(map[string][]struct {
+	ghCfg := make(map[string]struct {
 		Protocol   string
 		User       string
 		OAuthToken string `yaml:"oauth_token"`
 	})
-	err = yaml.Unmarshal(buf, &hubCfg)
+	err = yaml.Unmarshal(buf, &ghCfg)
 	if err != nil {
 		return "", "", err
 	}
-	if len(hubCfg["github.com"]) == 0 {
-		return "", "", errNoHubConfig
+	if _, ok := ghCfg["github.com"]; !ok {
+		return "", "", errNoGHConfig
 	}
 
-	return hubCfg["github.com"][0].User, hubCfg["github.com"][0].OAuthToken, nil
+	return ghCfg["github.com"].User, ghCfg["github.com"].OAuthToken, nil
 }
 
 func makeGitHubLabels( //nolint:gocyclo,funlen,gocognit,revive // TODO: Refactor.

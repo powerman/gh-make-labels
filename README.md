@@ -27,8 +27,7 @@ curl -sfL $(curl -s https://api.github.com/repos/powerman/gh-make-labels/release
 ### Dependencies
 
 You should have installed and configured
-[hub](https://github.com/github/hub) tool (gh-make-labels will use hub's
-token to access GitHub API).
+[gh](https://github.com/cli/cli) tool (gh-make-labels will use gh's token to access GitHub API).
 
 ## Usage
 
