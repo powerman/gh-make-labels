@@ -7,6 +7,10 @@
 [![Go Report Card](https://goreportcard.com/badge/github.com/powerman/gh-make-labels)](https://goreportcard.com/report/github.com/powerman/gh-make-labels)
 [![Release](https://img.shields.io/github/v/release/powerman/gh-make-labels?color=blue)](https://github.com/powerman/gh-make-labels/releases/latest)
 
+![Linux | amd64 arm64 armv7 ppc64le s390x riscv64](https://img.shields.io/badge/Linux-amd64%20arm64%20armv7%20ppc64le%20s390x%20riscv64-royalblue)
+![macOS | amd64 arm64](https://img.shields.io/badge/macOS-amd64%20arm64-royalblue)
+![Windows | amd64 arm64](https://img.shields.io/badge/Windows-amd64%20arm64-royalblue)
+
 This command-line tool will update given repo's labels to match predefined
 labels list.
 
