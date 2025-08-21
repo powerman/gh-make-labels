@@ -61,9 +61,9 @@ jobs:
           ldflags: '-s -w -buildid='
           executable_compression: |
             ${{ (
-              !(matrix.goos == 'windows' && matrix.goarch == 'arm64') &&
-              !(matrix.goos == 'linux'   && matrix.goarch == 's390x') &&
-              !(matrix.goos == 'linux'   && matrix.goarch == 'riscv64')
+              (!(matrix.goos == 'windows' && matrix.goarch == 'arm64')) &&
+              (!(matrix.goos == 'linux'   && matrix.goarch == 's390x')) &&
+              (!(matrix.goos == 'linux'   && matrix.goarch == 'riscv64'))
             ) && 'upx' || '' }}
           md5sum: false
           compress_assets: 'OFF'
