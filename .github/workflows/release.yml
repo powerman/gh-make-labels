@@ -59,7 +59,7 @@ jobs:
           pre_command: 'export CGO_ENABLED=0'
           build_flags: '-trimpath' # Reproducible build (also needs -buildid= in ldflags).
           ldflags: '-s -w -buildid='
-          executable_compression: |
+          executable_compression: >
             ${{ (
               (!(matrix.goos == 'windows' && matrix.goarch == 'arm64')) &&
               (!(matrix.goos == 'linux'   && matrix.goarch == 's390x')) &&
