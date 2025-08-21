@@ -33,6 +33,9 @@ jobs:
           - {goos: linux, goarch: amd64}
           - {goos: linux, goarch: arm64}
           - {goos: linux, goarch: arm, goarm: 7}
+          - {goos: linux, goarch: ppc64le}
+          - {goos: linux, goarch: s390x}
+          - {goos: linux, goarch: riscv64}
           - {goos: darwin, goarch: amd64}
           - {goos: darwin, goarch: arm64}
           - {goos: windows, goarch: amd64}
