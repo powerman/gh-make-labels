@@ -4,7 +4,7 @@ go 1.25.0
 
 require (
 	github.com/google/go-github v17.0.0+incompatible
-	github.com/powerman/structlog v0.7.3
+	github.com/powerman/structlog v0.8.0
 	gopkg.in/yaml.v2 v2.4.0
 )
 
