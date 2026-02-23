@@ -108,7 +108,7 @@ func loadLabelsCfg(configPath string) (map[string]string, error) {
 }
 
 func loadGHCfg() (user, token string, err error) {
-	buf, err := os.ReadFile(os.Getenv("HOME") + "/.config/gh/hosts.yml")
+	buf, err := os.ReadFile(os.Getenv("HOME") + "/.config/gh/hosts.yml") //nolint:gosec // False positive.
 	if err != nil {
 		if os.IsNotExist(err) {
 			return "", "", errNoGH
@@ -119,7 +119,7 @@ func loadGHCfg() (user, token string, err error) {
 	ghCfg := make(map[string]struct {
 		Protocol   string
 		User       string
-		OAuthToken string `yaml:"oauth_token"`
+		OAuthToken string `yaml:"oauth_token"` //nolint:gosec // False positive.
 	})
 	err = yaml.Unmarshal(buf, &ghCfg)
 	if err != nil {
