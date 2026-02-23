@@ -188,7 +188,7 @@ func makeGitHubLabels( //nolint:gocyclo,funlen,gocognit,revive // TODO: Refactor
 	}
 
 	for label, color := range newLabels {
-		l := &github.Label{Name: github.String(label), Color: github.String(color)}
+		l := &github.Label{Name: new(label), Color: new(color)}
 		_, _, err = client.Issues.CreateLabel(ctx, owner, repo, l)
 		if err != nil {
 			log.Warn("failed to create", "label", label, "color", color, "err", prettify(err))
