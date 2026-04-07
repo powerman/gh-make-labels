@@ -132,7 +132,7 @@ func loadGHCfg() (user, token string, err error) {
 	return ghCfg["github.com"].User, ghCfg["github.com"].OAuthToken, nil
 }
 
-func makeGitHubLabels( //nolint:gocyclo,funlen,gocognit // TODO: Refactor.
+func makeGitHubLabels( //nolint:gocyclo,funlen,gocognit,revive,nolintlint // TODO: Refactor.
 	ctx context.Context,
 	user string,
 	pass string,
