@@ -5,6 +5,17 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.1.7] - 2026-04-07
+
+### 📦️ Dependencies
+
+- **(deps)** Bump github.com/powerman/structlog from 0.7.3 to 0.8.0 by @dependabot[bot] in [#27]
+- **(deps)** Upgrade by @powerman in [0a38361]
+
+[1.1.7]: https://github.com/powerman/gh-make-labels/compare/v1.1.6..v1.1.7
+[#27]: https://github.com/powerman/gh-make-labels/pull/27
+[0a38361]: https://github.com/powerman/gh-make-labels/commit/0a383610759607f00f7d3c416cbc1742732447a2
+
 ## [1.1.6] - 2025-08-21
 
 [1.1.6]: https://github.com/powerman/gh-make-labels/compare/v1.1.5..v1.1.6
