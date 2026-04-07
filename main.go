@@ -119,7 +119,7 @@ func loadGHCfg() (user, token string, err error) {
 	ghCfg := make(map[string]struct {
 		Protocol   string
 		User       string
-		OAuthToken string `yaml:"oauth_token"` //nolint:gosec // False positive.
+		OAuthToken string `yaml:"oauth_token"`
 	})
 	err = yaml.Unmarshal(buf, &ghCfg)
 	if err != nil {
@@ -132,7 +132,7 @@ func loadGHCfg() (user, token string, err error) {
 	return ghCfg["github.com"].User, ghCfg["github.com"].OAuthToken, nil
 }
 
-func makeGitHubLabels( //nolint:gocyclo,funlen,gocognit,revive // TODO: Refactor.
+func makeGitHubLabels( //nolint:gocyclo,funlen,gocognit // TODO: Refactor.
 	ctx context.Context,
 	user string,
 	pass string,
