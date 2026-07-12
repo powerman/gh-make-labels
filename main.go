@@ -119,9 +119,9 @@ func loadGHCfg() (user, token string, err error) {
 	ghCfg := make(map[string]struct {
 		Protocol   string
 		User       string
-		OAuthToken string `yaml:"oauth_token"`
+		OAuthToken string `yaml:"oauth_token"` //nolint:tagliatelle // gh CLI uses snake_case.
 	})
-	err = yaml.Unmarshal(buf, &ghCfg)
+	err = yaml.Unmarshal(buf, &ghCfg) //nolint:gosec // Trusted file from gh CLI config.
 	if err != nil {
 		return "", "", err
 	}
