@@ -12,3 +12,5 @@ formatter:
 # Generated files: generators rewrite them in another style, so formatting only adds noise.
 exclude:
   - .sg/tests/__snapshots__ # ast-grep test --update-all
+  # Hand-aligned columns are easier to read than what the formatter produces.
+  - gh-labels.yml
