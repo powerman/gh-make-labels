@@ -1,6 +1,6 @@
 module github.com/powerman/gh-make-labels
 
-go 1.27.0
+go 1.27.3
 
 require (
 	github.com/google/go-github v17.0.0+incompatible
