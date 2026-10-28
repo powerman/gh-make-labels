@@ -5,6 +5,31 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.2.0] - 2026-10-28
+
+### 🔔 Changed
+
+- Require Go 1.27 by @powerman in [9b680dd]
+
+### 🐛 Fixed
+
+- Build with Go 1.27.3 by @powerman in [81f50c7]
+
+### 📦️ Dependencies
+
+- **(deps)** Upgrade github.com/powerman/structlog to v0.9.0 by @powerman in [ca411a3]
+- **(deps)** Upgrade go and golangci-lint by @powerman in [21d34ab]
+- **(deps)** Upgrade go and golangci-lint by @powerman in [dc8a035]
+- **(deps)** Mise up by @powerman in [a7ad6cb]
+
+[1.2.0]: https://github.com/powerman/gh-make-labels/compare/v1.1.7..v1.2.0
+[ca411a3]: https://github.com/powerman/gh-make-labels/commit/ca411a3329784d0b4aa1db2bf34681f344f93f30
+[21d34ab]: https://github.com/powerman/gh-make-labels/commit/21d34abfd96a85de1470e8eacf91a3b1fb38aacf
+[dc8a035]: https://github.com/powerman/gh-make-labels/commit/dc8a035ba3c66600eb0b2a85436a70f7a5c31f08
+[81f50c7]: https://github.com/powerman/gh-make-labels/commit/81f50c7a4b8c1d97e7caa83c9521d86ecf76d897
+[9b680dd]: https://github.com/powerman/gh-make-labels/commit/9b680dd156ee24e78a5c9fded96aeaf55797a4dc
+[a7ad6cb]: https://github.com/powerman/gh-make-labels/commit/a7ad6cba97ac03cbcdb4182a612492ffb0c5ebea
+
 ## [1.1.7] - 2026-04-07
 
 ### 📦️ Dependencies
